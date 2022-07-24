@@ -64,30 +64,6 @@ export class KafkaIntegrationService {
     });
   }
 
-  async createProducer(): Promise<Producer> {
-    const connection = this.createConnection();
-    const producer = connection.producer({
-      allowAutoTopicCreation: false,
-      transactionTimeout: 30000,
-    });
-
-    await producer.connect();
-    return producer;
-  }
-
-  async createConsumer(topicName: string, groupId: string): Promise<Consumer> {
-    const connection = this.createConnection();
-    const consumer = connection.consumer({
-      groupId: groupId,
-    });
-
-    await consumer.connect();
-    await consumer.subscribe({
-      topic: topicName,
-    });
-    return consumer;
-  }
-
   async openAdminConnection(): Promise<Admin> {
     const connection = this.createConnection();
     const admin = connection.admin();
