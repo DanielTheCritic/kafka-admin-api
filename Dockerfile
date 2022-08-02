@@ -1,38 +1,15 @@
-FROM node:18-alpine AS development
+FROM node:18-alpine
 
-ARG STAGE=dev
-ENV STAGE=${STAGE}
-
+# Create app directory
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+# Install app dependencies
+COPY package.json /usr/src/app/
+RUN npm install
 
-RUN npm install glob rimraf
-
-RUN npm install --only=development
-
-COPY . .
-
-RUN npm run build
-
-FROM node:18-alpine as production
-
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
-ARG STAGE=prod
-ENV STAGE=${STAGE}
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm install --only=production
-
-COPY . .
-
-COPY --from=development /usr/src/app/dist ./dist
+# Bundle app source
+COPY . /usr/src/app
 
 EXPOSE 19997
-
-CMD ["node", "dist/main"]
+CMD [ "npm", "start" ]
