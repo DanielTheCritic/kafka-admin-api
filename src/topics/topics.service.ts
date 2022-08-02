@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTopicDto } from './dto/create-topic.dto';
-import { KafkaIntegrationService } from 'src/kafka-integration/kafka-integration-service';
-import { GetKafkaTopicDto } from 'src/kafka-integration/dto/get-kafka-topic.dto';
+import { KafkaIntegrationService } from '../kafka-integration/kafka-integration-service';
+import { GetKafkaTopicDto } from '../kafka-integration/dto/get-kafka-topic.dto';
 
 @Injectable()
 export class TopicsService {
